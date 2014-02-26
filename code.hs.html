@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>code.hs.html</title>
+<meta name="Generator" content="Vim/7.2">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#000000" text="#ffffff"><font face="monospace">
+<font color="#ffff00">&nbsp;&nbsp;1 </font><font color="#00ffff">-- References are to</font><br>
+<font color="#ffff00">&nbsp;&nbsp;2 </font><font color="#00ffff">--&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://arxiv.org/abs/0912.1436">http://arxiv.org/abs/0912.1436</a></font><br>
+<font color="#ffff00">&nbsp;&nbsp;3 </font><font color="#00ffff">-- or</font><br>
+<font color="#ffff00">&nbsp;&nbsp;4 </font><font color="#00ffff">--&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://zeros.spag.dk">http://zeros.spag.dk</a></font><br>
+<font color="#ffff00">&nbsp;&nbsp;5 </font><font color="#ff40ff">import</font>&nbsp;List<br>
+<font color="#ffff00">&nbsp;&nbsp;6 </font><br>
+<font color="#ffff00">&nbsp;&nbsp;7 </font><font color="#00ffff">-- Note the ordering of the lists:</font><br>
+<font color="#ffff00">&nbsp;&nbsp;8 </font><font color="#00ffff">-- [i_m, ..., i_1], [s_m, ..., s_1], [u_1, ..., u_r]</font><br>
+<font color="#ffff00">&nbsp;&nbsp;9 </font><br>
+<font color="#ffff00">&nbsp;10 </font><font color="#00ffff">-- sumMult [a_1, ..., a_n] = \sum_{i=1}^n i a_i</font><br>
+<font color="#ffff00">&nbsp;11 </font>sumMult&nbsp;<font color="#ffff00">=</font>&nbsp;sum&nbsp;<font color="#ffff00">.</font>&nbsp;zipWith&nbsp;(<font color="#ffff00">*</font>)&nbsp;[<font color="#ffff00">1</font><font color="#ffff00">..</font>]<br>
+<font color="#ffff00">&nbsp;12 </font><br>
+<font color="#ffff00">&nbsp;13 </font><font color="#00ffff">-- maximize f [a_1, ..., a_n] = max{f(a_1), ..., f(a_n)}</font><br>
+<font color="#ffff00">&nbsp;14 </font>maximize&nbsp;f&nbsp;<font color="#ffff00">=</font>&nbsp;maximum&nbsp;<font color="#ffff00">.</font>&nbsp;map&nbsp;f<br>
+<font color="#ffff00">&nbsp;15 </font><br>
+<font color="#ffff00">&nbsp;16 </font><font color="#00ffff">-- Given a list [s1, ..., sn] produce</font><br>
+<font color="#ffff00">&nbsp;17 </font><font color="#00ffff">-- [ [x1, ..., xn] | x1 &lt;- [0..s1], ..., xn &lt;- [0..sn] ].</font><br>
+<font color="#ffff00">&nbsp;18 </font>cartesian&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[[Integer]]<br>
+<font color="#ffff00">&nbsp;19 </font>cartesian&nbsp;<font color="#ffff00">=</font>&nbsp;mapM&nbsp;(<font color="#ffff00">\</font>n&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[<font color="#ffff00">0</font><font color="#ffff00">..</font>n])<br>
+<font color="#ffff00">&nbsp;20 </font><br>
+<font color="#ffff00">&nbsp;21 </font>cart&nbsp;dim&nbsp;size&nbsp;<font color="#ffff00">=</font>&nbsp;cartesian&nbsp;(take&nbsp;(fromInteger&nbsp;dim)&nbsp;(repeat&nbsp;(fromInteger&nbsp;size)))<br>
+<font color="#ffff00">&nbsp;22 </font><br>
+<font color="#ffff00">&nbsp;23 </font><font color="#00ffff">-- Check if the i vector is outside the stairs form.</font><br>
+<font color="#ffff00">&nbsp;24 </font><font color="#00ffff">-- See Remark 12.</font><br>
+<font color="#ffff00">&nbsp;25 </font>outside&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Bool<br>
+<font color="#ffff00">&nbsp;26 </font>outside&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;r&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;sum&nbsp;(zipWith&nbsp;div&nbsp;is&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;27 </font><br>
+<font color="#ffff00">&nbsp;28 </font><font color="#00ffff">-- See Definition 10 and Theorem 11.</font><br>
+<font color="#ffff00">&nbsp;29 </font>d&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;30 </font>d&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">|</font>&nbsp;outside&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;product&nbsp;ss<br>
+<font color="#ffff00">&nbsp;31 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">|</font>&nbsp;otherwise&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">=</font>&nbsp;dr&nbsp;(reverse&nbsp;is)&nbsp;r&nbsp;(reverse&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;32 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;33 </font>&nbsp;&nbsp;&nbsp;&nbsp;dr&nbsp;[i]&nbsp;r&nbsp;[s]&nbsp;<font color="#ffff00">=</font>&nbsp;min&nbsp;(i&nbsp;<font color="#ffff00">`div`</font>&nbsp;r)&nbsp;s<br>
+<font color="#ffff00">&nbsp;34 </font>&nbsp;&nbsp;&nbsp;&nbsp;dr&nbsp;(i<font color="#ffff00">:</font>is)&nbsp;r&nbsp;(s<font color="#ffff00">:</font>ss)&nbsp;<font color="#ffff00">=</font>&nbsp;maximize&nbsp;f&nbsp;(setA&nbsp;i&nbsp;r&nbsp;s)<br>
+<font color="#ffff00">&nbsp;35 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;36 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;us&nbsp;<font color="#ffff00">=</font>&nbsp;(s&nbsp;<font color="#ffff00">-</font>&nbsp;sum&nbsp;us)&nbsp;<font color="#ffff00">*</font>&nbsp;(dr&nbsp;is&nbsp;r&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;37 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">+</font>&nbsp;summing&nbsp;us&nbsp;is&nbsp;r&nbsp;ss<br>
+<font color="#ffff00">&nbsp;38 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ffff">-- Note that [u_1, ..., u_r].</font><br>
+<font color="#ffff00">&nbsp;39 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summing&nbsp;[u]&nbsp;is&nbsp;<font color="#ffff00">1</font>&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;u&nbsp;<font color="#ffff00">*</font>&nbsp;product&nbsp;ss<br>
+<font color="#ffff00">&nbsp;40 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summing&nbsp;(u<font color="#ffff00">:</font>us)&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;u&nbsp;<font color="#ffff00">*</font>&nbsp;(dr&nbsp;is&nbsp;(r<font color="#ffff00">-</font><font color="#ffff00">1</font>)&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;41 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">+</font>&nbsp;summing&nbsp;us&nbsp;is&nbsp;(r<font color="#ffff00">-</font><font color="#ffff00">1</font>)&nbsp;ss<br>
+<font color="#ffff00">&nbsp;42 </font><br>
+<font color="#ffff00">&nbsp;43 </font><font color="#00ffff">-- See Definition 10.</font><br>
+<font color="#ffff00">&nbsp;44 </font>setA&nbsp;<font color="#ffff00">::</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[[Integer]]<br>
+<font color="#ffff00">&nbsp;45 </font>setA&nbsp;i&nbsp;r&nbsp;s&nbsp;<font color="#ffff00">=</font>&nbsp;filter&nbsp;(<font color="#ffff00">\</font>u&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;sum&nbsp;u&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;s&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;sumMult&nbsp;u&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i)<br>
+<font color="#ffff00">&nbsp;46 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cart&nbsp;r&nbsp;s)<br>
+<font color="#ffff00">&nbsp;47 </font><br>
+<font color="#ffff00">&nbsp;48 </font><font color="#00ffff">-- d' [i_1, ..., i_m] r q = d [i_1, ..., i_m] r [q, ..., q]</font><br>
+<font color="#ffff00">&nbsp;49 </font>d' <font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;50 </font>d' is&nbsp;r&nbsp;q&nbsp;<font color="#ffff00">=</font>&nbsp;d&nbsp;is&nbsp;r&nbsp;(replicate&nbsp;(length&nbsp;is)&nbsp;q)<br>
+<font color="#ffff00">&nbsp;51 </font><br>
+<font color="#ffff00">&nbsp;52 </font><font color="#00ffff">-- See Proposition 39.</font><br>
+<font color="#ffff00">&nbsp;53 </font>htilde&nbsp;<font color="#ffff00">::</font>&nbsp;[[Integer]]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;54 </font>htilde&nbsp;ws&nbsp;k&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;hr&nbsp;(reverse&nbsp;ws)&nbsp;k&nbsp;(reverse&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;55 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;56 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ffff">-- [s_m, ..., s_2, s_1]</font><br>
+<font color="#ffff00">&nbsp;57 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ffff">-- [w_m, ..., w_2, w_1] = [[v^m_1, ..., v^m_r], ..., [v^1_1, ..., v^1_r]]</font><br>
+<font color="#ffff00">&nbsp;58 </font>&nbsp;&nbsp;&nbsp;&nbsp;hr&nbsp;[vs]&nbsp;k&nbsp;[s]&nbsp;<font color="#ffff00">=</font>&nbsp;sum&nbsp;<font color="#ffff00">$</font>&nbsp;drop&nbsp;(fromIntegral&nbsp;(k<font color="#ffff00">-</font><font color="#ffff00">1</font>))&nbsp;vs<br>
+<font color="#ffff00">&nbsp;59 </font>&nbsp;&nbsp;&nbsp;&nbsp;hr&nbsp;(w<font color="#ffff00">:</font>ws)&nbsp;k&nbsp;(s<font color="#ffff00">:</font>ss)&nbsp;<font color="#ffff00">=</font>&nbsp;(s&nbsp;<font color="#ffff00">-</font>&nbsp;(sum&nbsp;w))&nbsp;<font color="#ffff00">*</font>&nbsp;(hr&nbsp;ws&nbsp;k&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;60 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;summing&nbsp;(take&nbsp;(fromIntegral&nbsp;(k<font color="#ffff00">-</font><font color="#ffff00">1</font>))&nbsp;w)&nbsp;k<br>
+<font color="#ffff00">&nbsp;61 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;(sum&nbsp;(drop&nbsp;(fromIntegral&nbsp;(k<font color="#ffff00">-</font><font color="#ffff00">1</font>))&nbsp;w))&nbsp;<font color="#ffff00">*</font>&nbsp;(product&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;62 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;63 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summing&nbsp;[]&nbsp;<font color="#ffff00">1</font>&nbsp;<font color="#ffff00">=</font>&nbsp;<font color="#ffff00">0</font><br>
+<font color="#ffff00">&nbsp;64 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;summing&nbsp;(v<font color="#ffff00">:</font>vs)&nbsp;k' <font color="#ffff00">=</font>&nbsp;v&nbsp;<font color="#ffff00">*</font>&nbsp;(hr&nbsp;ws&nbsp;(k'<font color="#ffff00">-</font><font color="#ffff00">1</font>)&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;65 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;summing&nbsp;vs&nbsp;(k'<font color="#ffff00">-</font><font color="#ffff00">1</font>)<br>
+<font color="#ffff00">&nbsp;66 </font>&nbsp;&nbsp;&nbsp;&nbsp;hr&nbsp;[]&nbsp;k&nbsp;s&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;(<font color="#ffff00">40</font>&nbsp;<font color="#ffff00">+</font>&nbsp;length&nbsp;s)<br>
+<font color="#ffff00">&nbsp;67 </font><br>
+<font color="#ffff00">&nbsp;68 </font><font color="#00ffff">-- Lower Bound, H. See Proposition 40.</font><br>
+<font color="#ffff00">&nbsp;69 </font>h&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;70 </font>h&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;maximize&nbsp;(<font color="#ffff00">\</font>ws&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;htilde&nbsp;ws&nbsp;r&nbsp;ss)&nbsp;(sequence&nbsp;(set&nbsp;is&nbsp;ss))<br>
+<font color="#ffff00">&nbsp;71 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;72 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;[]&nbsp;[]&nbsp;<font color="#ffff00">=</font>&nbsp;[]<br>
+<font color="#ffff00">&nbsp;73 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;(i<font color="#ffff00">:</font>is)&nbsp;(s<font color="#ffff00">:</font>ss)&nbsp;<font color="#ffff00">=</font><br>
+<font color="#ffff00">&nbsp;74 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(filter&nbsp;(<font color="#ffff00">\</font>vs&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;sum&nbsp;vs&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;s&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;sumMult&nbsp;vs&nbsp;<font color="#ffff00">==</font>&nbsp;i)&nbsp;(cart&nbsp;r&nbsp;s))<br>
+<font color="#ffff00">&nbsp;75 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">:</font>&nbsp;set&nbsp;is&nbsp;ss<br>
+<font color="#ffff00">&nbsp;76 </font><br>
+<font color="#ffff00">&nbsp;77 </font><font color="#00ffff">-- h' [i_1, ..., i_m] r q = h [i_1, ..., i_m] r [q, ..., q]</font><br>
+<font color="#ffff00">&nbsp;78 </font>h' <font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;79 </font>h' is&nbsp;r&nbsp;q&nbsp;<font color="#ffff00">=</font>&nbsp;h&nbsp;is&nbsp;r&nbsp;(replicate&nbsp;(length&nbsp;is)&nbsp;q)<br>
+<font color="#ffff00">&nbsp;80 </font><br>
+<font color="#ffff00">&nbsp;81 </font><font color="#00ffff">-- See Corollary 9.</font><br>
+<font color="#ffff00">&nbsp;82 </font><font color="#00ffff">-- min { (i_1·s_1···s_m + s_1·i_2·s_3···s_m + ··· + s_1···s_{m-1}·i_m) / r</font><br>
+<font color="#ffff00">&nbsp;83 </font><font color="#00ffff">--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; , s_1···s_m }</font><br>
+<font color="#ffff00">&nbsp;84 </font>sz&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;85 </font>sz&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;min&nbsp;cor9&nbsp;(product&nbsp;ss)<br>
+<font color="#ffff00">&nbsp;86 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">&nbsp;87 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cor9&nbsp;<font color="#ffff00">=</font>&nbsp;(sum&nbsp;(zipWith&nbsp;(<font color="#ffff00">*</font>)&nbsp;is&nbsp;(map&nbsp;product&nbsp;<font color="#ffff00">$</font>&nbsp;f&nbsp;ss)))&nbsp;<font color="#ffff00">`div`</font>&nbsp;r<br>
+<font color="#ffff00">&nbsp;88 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;[]&nbsp;<font color="#ffff00">=</font>&nbsp;[]<br>
+<font color="#ffff00">&nbsp;89 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;(x<font color="#ffff00">:</font>xs)&nbsp;<font color="#ffff00">=</font>&nbsp;xs&nbsp;<font color="#ffff00">:</font>&nbsp;map&nbsp;(x<font color="#ffff00">:</font>)&nbsp;(f&nbsp;xs)<br>
+<font color="#ffff00">&nbsp;90 </font><br>
+<font color="#ffff00">&nbsp;91 </font><font color="#00ffff">-- sz' [i_1, ..., i_m] r q</font><br>
+<font color="#ffff00">&nbsp;92 </font><font color="#00ffff">-- = min{floor((i_1 + ... + i_m) * q^(m-1) / r), q^m}</font><br>
+<font color="#ffff00">&nbsp;93 </font><font color="#00ffff">-- See (2.1).</font><br>
+<font color="#ffff00">&nbsp;94 </font>sz' <font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">&nbsp;95 </font>sz' is&nbsp;r&nbsp;q&nbsp;<font color="#ffff00">=</font>&nbsp;min&nbsp;(((sum&nbsp;is)&nbsp;<font color="#ffff00">*</font>&nbsp;q<font color="#ffff00">^</font>(m<font color="#ffff00">-</font><font color="#ffff00">1</font>))&nbsp;<font color="#ffff00">`div`</font>&nbsp;r)&nbsp;(q<font color="#ffff00">^</font>m)<br>
+<font color="#ffff00">&nbsp;96 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font>&nbsp;m&nbsp;<font color="#ffff00">=</font>&nbsp;length&nbsp;is<br>
+<font color="#ffff00">&nbsp;97 </font><br>
+<font color="#ffff00">&nbsp;98 </font><font color="#00ffff">-- Closed Formula; two variables.</font><br>
+<font color="#ffff00">&nbsp;99 </font>cf&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">100 </font>cf&nbsp;is&nbsp;r&nbsp;ss&nbsp;<font color="#ffff00">=</font>&nbsp;truncate&nbsp;(cfrat&nbsp;is&nbsp;r&nbsp;ss)<br>
+<font color="#ffff00">101 </font><br>
+<font color="#ffff00">102 </font>cf' <font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer<br>
+<font color="#ffff00">103 </font>cf' is&nbsp;r&nbsp;q&nbsp;<font color="#ffff00">=</font>&nbsp;truncate&nbsp;(cfrat&nbsp;is&nbsp;r&nbsp;[q,q])<br>
+<font color="#ffff00">104 </font><br>
+<font color="#ffff00">105 </font><font color="#00ffff">-- See Proposition 19.</font><br>
+<font color="#ffff00">106 </font>cfrat&nbsp;<font color="#ffff00">::</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Integer&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;[Integer]&nbsp;<font color="#ffff00">-&gt;</font>&nbsp;Rational<br>
+<font color="#ffff00">107 </font>cfrat&nbsp;[i_i1,i_i2]&nbsp;i_r&nbsp;[i_s1,i_s2]&nbsp;<font color="#ffff00">=</font><br>
+<font color="#ffff00">108 </font>&nbsp;&nbsp;&nbsp;&nbsp;minimum&nbsp;(l&nbsp;c1&nbsp;<font color="#ffff00">++</font>&nbsp;l&nbsp;c2&nbsp;<font color="#ffff00">++</font>&nbsp;l&nbsp;c3&nbsp;<font color="#ffff00">++</font>&nbsp;[c4])<br>
+<font color="#ffff00">109 </font>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00">where</font><br>
+<font color="#ffff00">110 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i1&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;i_i1;&nbsp;i2&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;i_i2<br>
+<font color="#ffff00">111 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;i_r<br>
+<font color="#ffff00">112 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s1&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;i_s1;&nbsp;s2&nbsp;<font color="#ffff00">=</font>&nbsp;fromIntegral&nbsp;i_s2<br>
+<font color="#ffff00">113 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;c&nbsp;<font color="#ffff00">=</font>&nbsp;map&nbsp;c&nbsp;[<font color="#ffff00">1</font><font color="#ffff00">..</font>r<font color="#ffff00">-</font><font color="#ffff00">1</font>]<br>
+<font color="#ffff00">114 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c1&nbsp;k&nbsp;<font color="#ffff00">=</font>&nbsp;<font color="#ffff00">if</font>&nbsp;(r<font color="#ffff00">-</font>k)<font color="#ffff00">*</font>(r<font color="#ffff00">/</font>(r<font color="#ffff00">+</font><font color="#ffff00">1</font>))<font color="#ffff00">*</font>s1&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i1&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i1&nbsp;<font color="#ffff00">&lt;</font>&nbsp;(r<font color="#ffff00">-</font>k)<font color="#ffff00">*</font>s1<br>
+<font color="#ffff00">115 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;<font color="#ffff00">0</font>&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i2&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i2&nbsp;<font color="#ffff00">&lt;</font>&nbsp;k<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">116 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">then</font>&nbsp;s2<font color="#ffff00">*</font>(i1<font color="#ffff00">/</font>r)&nbsp;<font color="#ffff00">+</font>&nbsp;(i2<font color="#ffff00">/</font>r)<font color="#ffff00">*</font>(i1<font color="#ffff00">/</font>(r<font color="#ffff00">-</font>k))<br>
+<font color="#ffff00">117 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">else</font>&nbsp;s1<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">118 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c2&nbsp;k&nbsp;<font color="#ffff00">=</font>&nbsp;<font color="#ffff00">if</font>&nbsp;(r<font color="#ffff00">-</font>k)<font color="#ffff00">*</font>(r<font color="#ffff00">/</font>(r<font color="#ffff00">+</font><font color="#ffff00">1</font>))<font color="#ffff00">*</font>s1&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i1&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i1&nbsp;<font color="#ffff00">&lt;</font>&nbsp;(r<font color="#ffff00">-</font>k)<font color="#ffff00">*</font>s1<br>
+<font color="#ffff00">119 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;k<font color="#ffff00">*</font>s2&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i2&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i2&nbsp;<font color="#ffff00">&lt;</font>&nbsp;(k<font color="#ffff00">+</font><font color="#ffff00">1</font>)<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">120 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">then</font>&nbsp;s2<font color="#ffff00">*</font>(i1<font color="#ffff00">/</font>r)<br>
+<font color="#ffff00">121 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;((k<font color="#ffff00">+</font><font color="#ffff00">1</font>)<font color="#ffff00">*</font>s2&nbsp;<font color="#ffff00">-</font>&nbsp;i2)&nbsp;<font color="#ffff00">*</font>&nbsp;((i1<font color="#ffff00">/</font>(r<font color="#ffff00">-</font>k))<font color="#ffff00">-</font>(i1<font color="#ffff00">/</font>r))<br>
+<font color="#ffff00">122 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;(i2<font color="#ffff00">-</font>k<font color="#ffff00">*</font>s2)<font color="#ffff00">*</font>(s1<font color="#ffff00">-</font>(i1<font color="#ffff00">/</font>r))<br>
+<font color="#ffff00">123 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">else</font>&nbsp;s1<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">124 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c3&nbsp;k&nbsp;<font color="#ffff00">=</font>&nbsp;<font color="#ffff00">if</font>&nbsp;(r<font color="#ffff00">-</font>k<font color="#ffff00">-</font><font color="#ffff00">1</font>)<font color="#ffff00">*</font>s1&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i1&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i1&nbsp;<font color="#ffff00">&lt;</font>&nbsp;(r<font color="#ffff00">-</font>k)<font color="#ffff00">*</font>(r<font color="#ffff00">/</font>(r<font color="#ffff00">+</font><font color="#ffff00">1</font>))<font color="#ffff00">*</font>s1<br>
+<font color="#ffff00">125 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;<font color="#ffff00">0</font>&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i2&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i2&nbsp;<font color="#ffff00">&lt;</font>&nbsp;(k<font color="#ffff00">+</font><font color="#ffff00">1</font>)<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">126 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">then</font>&nbsp;s2<font color="#ffff00">*</font>(i1<font color="#ffff00">/</font>r)&nbsp;<font color="#ffff00">+</font>&nbsp;(i2<font color="#ffff00">/</font>(k<font color="#ffff00">+</font><font color="#ffff00">1</font>))<font color="#ffff00">*</font>(s1<font color="#ffff00">-</font>(i1<font color="#ffff00">/</font>r))<br>
+<font color="#ffff00">127 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">else</font>&nbsp;s1<font color="#ffff00">*</font>s2<br>
+<font color="#ffff00">128 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c4&nbsp;<font color="#ffff00">=</font>&nbsp;<font color="#ffff00">if</font>&nbsp;s1<font color="#ffff00">*</font>(r<font color="#ffff00">-</font><font color="#ffff00">1</font>)&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i1&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i1&nbsp;<font color="#ffff00">&lt;</font>&nbsp;s1<font color="#ffff00">*</font>r<br>
+<font color="#ffff00">129 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;<font color="#ffff00">0</font>&nbsp;<font color="#ffff00">&lt;=</font>&nbsp;i2&nbsp;<font color="#ffff00">&amp;&amp;</font>&nbsp;i2&nbsp;<font color="#ffff00">&lt;</font>&nbsp;s2<br>
+<font color="#ffff00">130 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">then</font>&nbsp;s2<font color="#ffff00">*</font>(fromIntegral&nbsp;(floor&nbsp;(i1<font color="#ffff00">/</font>r)))<br>
+<font color="#ffff00">131 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00">+</font>&nbsp;i2<font color="#ffff00">*</font>(s1&nbsp;<font color="#ffff00">-</font>&nbsp;fromIntegral&nbsp;(&nbsp;floor&nbsp;(i1<font color="#ffff00">/</font>r)))<br>
+<font color="#ffff00">132 </font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#ffff00">else</font>&nbsp;s1<font color="#ffff00">*</font>s2<br>
+</font></body>
+</html>

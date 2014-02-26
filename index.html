@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="LaTeXMathML.standardarticle.css" />
+        <title>Tables for numbers of zeros with multiplicity at least r</title>
+        <style type="text/css">
+            body {
+                font-family: sans-serif;
+            }
+
+            h2 {
+                text-indent: -1.15em;
+            }
+
+            h3 {
+                font-size: 1em;
+                margin-bottom: 0em;
+                text-indent: -1.98em;
+            }
+
+            h4 {
+                font-weight: normal;
+                text-indent: -2.80em;
+                padding-bottom: .5em;
+            }
+
+            table {
+                margin-left: auto;
+                margin-right: auto;
+                border-collapse: collapse;
+            }
+
+            td {
+                padding: 0.2em;
+                margin:  0px;
+            }
+
+            td {
+                text-align: center;
+            }
+
+            ul, ol {
+                margin-top: -0.5em;
+                margin-bottom: 0.5em;
+            }
+
+            .math {
+                vertical-align: middle;
+            }
+
+            .equation {
+                text-align: center;
+            }
+            .equationN {
+                text-align: center;
+                width: 90%;
+                float: left;
+            }
+            .equationNumber {
+                text-align: right;
+                width: 10%;
+                float: right;
+            }
+            .equationContainer {
+            }
+           .clear { clear: both;}
+
+           .reference {
+               margin-bottom: 1em;
+           }
+        </style>
+        <script type="text/javascript" src="textheworld8.user.js"></script>
+    </head>
+
+    <body>
+    <noscript>
+        <div style="color: red; text-align:center; margin-top: 20em;
+            margin-bottom: 20em;">
+            <strong>Warning: JavaScript is required!
+                <br />
+                If your browser supports JavaScript, be sure it is enabled.
+            </strong>
+        </div>
+    </noscript>
+    <div style="text-align: center;">
+        <h1>Tables for numbers of zeros with multiplicity at least <i>r</i></h1>
+    </div>
+    <div class="LaTeX" style="width: 550px; margin: auto;">
+        <div class="author">
+            <a href="http://people.math.aau.dk/~olav/">Geil, O.</a>,
+            <a href="http://spag.dk">Thomsen, C.</a>
+        </div>
+
+        <div class="address">
+            Department of Mathematical Sciences, Aalborg University,
+            <br />
+            Fredrik Bajers Vej 7G, 9220 Aalborg Øst, Denmark
+        </div>
+
+        <h2 class="section" id="SEC1">1.&nbsp;News</h2>
+        <p>
+        <!-- Old news
+        Fri Nov  6 16:02:33 CET 2009
+        This webpage is being created.
+        < br/>
+        Wed Nov 11 15:57:27 CET 2009
+        Updated with more text and links to the ODS-files.
+        < br/>
+        Sat 28 Nov 2009 17:50:10 CET
+        Removed PNG images of mathematical formulas and started using MathML via
+        LaTeXMathML.js.
+        < br/>
+        Tue  1 Dec 2009 10:21:21 CET
+        Changed to do math typesetting using jsMath since IE handles MathML via
+        <a href="http://www.dessci.com/en/products/mathplayer/">mathplayer</a>
+        incredible awfully (from time to time, IE simply crashes).
+        < br/>
+        Mon Dec  7 13:12:35 CET 2009
+        Publicly available at <code>http://www.math.aau.dk/~caspert/zeros</code>.
+        < br/>
+        Tue Dec  8 16:23:19 CET 2009
+        More tables inserted. Even more will come soon.
+        < br/>
+        Thu Dec 10 18:55:55 CET 2009
+        Spreadsheet files removed and new plain text files are generated. (I now
+        made the entire process completely automated.)
+        < br/>
+        Mon Dec 14 11:12:19 CET 2009
+        More tables uploaded.
+        < br/>
+        Wed 16 Dec 2009 10:45:50 CET
+        More tables uploaded.
+        < br/>
+        Sun 20 Dec 2009 23:50:47 CET
+        Permanent website address is <code>http://zeros.spag.dk</code>.
+        < br/>
+        Wed 23 Dec 2009 18:47:16 CET
+        Table for [;m=2;], [;r=8;] and [;q=7;] added. The one for [;q=8;] ended in stack
+        overflow (even though 256 MB of ram was assigned to the process). A
+        rerun is started.
+        < br/>
+        Mon 11 Jan 2010 14:27:32 CET
+        Due to server breakdown, some calculations was lost. Some cases are now
+        being recalculated, others are scheduled for rerun.
+        < br/>
+        Fri Feb  5 09:28:39 CET 2010
+        Table for [;m=4;], [;r=4;], [;q=5;] added. Rerun of [;m=3;], [;r=6;], [;q=6;]
+        started.
+        < br/>
+        Tue Feb 16 10:34:41 CET 2010
+        Table for [;m=2;], [;r=8;], [;q=8;] added. Rerun of [;m=3;], [;r=5;], [;q=8;]
+        started.
+        < br/>
+        Mon Mar  1 09:34:30 CET 2010
+        Table for [;m=3;], [;r=6;], [;q=6;] added; the rerun finished after approximately 1
+        month of CPU time on an Intel Xeon 2.5 GHz (approx. 5000 bogomips).
+        < br/>
+        Sat 20 Mar 2010 04:04:59 CET
+        Haskell code added to github. The before mentioned rerun has now been running
+        for more than 46000 CPU minutes, or approx. one CPU month.
+        <br />
+        Mon Mar 22 13:21:35 CET 2010
+        The run for [;m=3;], [;r=5;], [;q=8;] finished after well over 47000 CPU minutes, and
+        the tables are now added.
+        -->
+        <br />
+        Wed Jan  5 22:39:36 CET 2011
+        The code has been optimized in a number of ways; the online version
+        remains the original for reference. If you want the faster code, please
+        send an email to Casper.
+        <br />
+        Wed Jun  1 14:30:50 CEST 2011
+        Now using TeXtheWorld instead of jsMath, and just using the stylesheet
+        from LaTeXMathML.
+        <br />
+        Tue Sep 27 20:15:45 CEST 2011
+	The data files are now put in a <a href="zeros.zip">zip</a> and a
+        <a href="zeros.tar.gz">tar.gz</a> file.
+        </p>
+
+        <h2 class="section" id="SEC2">2.&nbsp;Background</h2>
+        <p>
+        We consider non-zero polynomials [;F(X_1, \ldots , X_m) \in
+        \mathbb{F}[X_1, \ldots , X_m]\setminus \{0\};] where [;\mathbb{F};] is
+        any field.
+        </p>
+
+        <h3 class="subsection" id="SEC2.1">2.1.&nbsp;Multiplicity</h3>
+        <p>
+        Consider a point [;\vec{a}=(a_1, \ldots , a_m)\in \mathbb{F}^m;]. Let
+        [;J_t \subseteq \mathbb{F}[X_1, \ldots , X_m];] be the ideal generated
+        by
+        </p>
+        <div class="equation">
+        [;
+        \{(X_1-a_a)^{p_1}\cdots (X_m-a_m)^{p_m} \mid p_1+ \cdots +p_m=t\}
+        .
+        ;]
+        </div>
+        <p>
+        We say that [;\vec{a};] is a zero of [;F;] of multiplicity [;r;] if
+        [;\mathbb{F}(X_1, \ldots , X_m) \in J_r \backslash J_{r+1};].
+        Equivalently, multiplicity can be defined using the Hasse derivative.
+        </p>
+
+        <h3 class="subsection" id="SEC2.2">2.2.&nbsp;The problem</h3>
+        <p>
+        Let [;\prec;] be the pure lexicographic ordering with [;X_m \prec \cdots
+        \prec X_1;]. Assume the only thing we know about [;F(X_1, \ldots ,
+        X_m);] is its leading monomial [;X_1^{i_1}\cdots X_m^{i_m};] (taken of
+        course with respect to [;\prec;]). Let [;S_1, \ldots , S_m \subseteq
+        \mathbb{F};] be finite sets, say [;s_1= |S_1|, \ldots , s_m=|S_m|;]. We
+        would like to know what is the maximal attainable number of zeros in
+        [;S_1 \times \cdots \times S_m;] of multiplicity at least [;r;] for such
+        a polynomial.  The function [;D(i_1, \ldots  ,i_m,r,s_1, \ldots  ,s_m);]
+        from <a href="#geil2009a">[3]</a> upper bounds this number. Similarly,
+        the function [;H(i_1, \ldots , i_m,r,s_1, \ldots , s_m);] from
+        <a href="#geil2009a">[3]</a> serve as a lower bound. Below we list
+        values of [;D(i_1, \ldots , i_m,r,q, \ldots ,q);] and [;H(i_1, \ldots ,
+        i_m,r,q, \ldots ,q);] for a number of cases. The upper bound
+        [;D(i_1,\ldots,i_m,r,q,\ldots,q);] is an improvement to the upper bound
+        </p>
+        <div class="equationContainer">
+        <div class="equationN">
+        [;
+        \min\bigg\{ \frac{q^{m-1}}{r} \sum_{j=1}^m i_j , q^m\bigg\}
+        ;]
+        .
+        </div>
+        <div class="equationNumber" id="EQupperBoundSZ">(2.1)</div>
+        <div class="clear"></div>
+        </div>
+        <p>
+        Here, the first expression comes from a corollary to the generalized
+        Schwartz-Zippel bound <a href="#augot2006a">[1]</a>
+        <a href="#dvir2009a">[2]</a> and [;q^m;] is the number of points in the
+        ensemble under consideration.
+        </p>
+
+        <h2 class="section" id="SEC3">3.&nbsp;How to read the data</h2>
+        <p>
+        When [;m=2;], we can put the lower and upper bounds in a table. When
+        [;m;] is larger, we consider tables of tables as we will see later.
+        </p>
+
+        <p>
+        For instance for [;m=2;], [;r=2;] and [;s_1=s_2=q=3;], the table looks a
+        follows.
+        </p>
+
+        <table id="TABvar2mult2q3">
+            <caption><strong>Table&nbsp;3.1.</strong> Lower and Upper Bounds: 2
+                Variables, Multiplicity 2, [;q = 3;].</caption>
+            <tr>
+                <td>         </td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+                <td>[;i_1=4;]</td>
+                <td>[;i_1=5;]</td>
+            </tr>
+            <tr>
+                <td>[;i_2=0;]</td>
+                <td>  0-0  </td>
+                <td>  0-0  </td>
+                <td>  3-3  </td>
+                <td>  3-3  </td>
+                <td>  6-6  </td>
+                <td>  6-6  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=1;]</td>
+                <td>  0-0  </td>
+                <td>  1-1  </td>
+                <td>  3-4  </td>
+                <td>  4-5  </td>
+                <td>  6-7  </td>
+                <td>  7-7  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=2;]</td>
+                <td>  3-3  </td>
+                <td>  3-3  </td>
+                <td>  5-5  </td>
+                <td>  6-7  </td>
+                <td>  7-8  </td>
+                <td>  8-8  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=3;]</td>
+                <td>  3-3  </td>
+                <td>  4-4  </td>
+                <td>  6-6  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=4;]</td>
+                <td>  6-6  </td>
+                <td>  6-6  </td>
+                <td>  7-7  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=5;]</td>
+                <td>  6-6  </td>
+                <td>  7-7  </td>
+                <td>  8-8  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+        </table>
+        <p>
+        Each entry [;(i_1,i_2);] contains "[;H(i_1,i_2,3,3,3);] -
+        [;D(i_1,i_2,2,3,3);]".
+        </p>
+
+        <p>
+        In addition to this table, we also find a table which compares the upper
+        bound calculated by [;D;] and the upper bound from
+        (<a href="#EQupperBoundSZ">2.1</a>). Here, each cell contains
+        </p>
+        <div class="equation">
+        [;
+        \textstyle
+        D(i_1,i_2,2,3,3) \textrm{\ /\ } \big(\min\big\{ \frac{q^{m-1}}{r}
+        \sum_{j=1}^m i_j , q^m\big\} - D(i_1,i_2,2,3,3)\big)
+        ;]
+        </div>
+        <p>
+        </p>
+
+        <table id="TABvar2mult2q3SZ">
+            <caption><strong>Table&nbsp;3.2.</strong> New Bound Vs. Previous
+                Bound: 2 variables, multiplicity 2, [;q = 3;].</caption>
+            <tr>
+                <td></td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+                <td>[;i_1=4;]</td>
+                <td>[;i_1=5;]</td>
+            </tr>
+            <tr>
+                <td>[;i_2=0;]</td>
+                <td>  0/0  </td>
+                <td>  0/1  </td>
+                <td>  3/0  </td>
+                <td>  3/1  </td>
+                <td>  6/0  </td>
+                <td>  6/1  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=1;]</td>
+                <td>  0/1  </td>
+                <td>  1/2  </td>
+                <td>  4/0  </td>
+                <td>  5/1  </td>
+                <td>  7/0  </td>
+                <td>  7/2  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=2;]</td>
+                <td>  3/0  </td>
+                <td>  3/1  </td>
+                <td>  5/1  </td>
+                <td>  7/0  </td>
+                <td>  8/1  </td>
+                <td>  8/1  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=3;]</td>
+                <td>  3/1  </td>
+                <td>  4/2  </td>
+                <td>  6/1  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=4;]</td>
+                <td>  6/0  </td>
+                <td>  6/1  </td>
+                <td>  7/2  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=5;]</td>
+                <td>  6/1  </td>
+                <td>  7/2  </td>
+                <td>  8/1  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+        </table>
+
+        <p>
+        As an example where [;m>2;], let [;m=4;], [;r=2;] and
+        [;s_1=s_2=s_3=s_4=q=2;]. The table consists of 16 matrices of size [;4
+        \times 4;].  We here only list the upper left part.
+        </p>
+
+        <table id="TABvar4mult2q2" style="margin-left: -50px;">
+            <caption><strong>Table&nbsp;3.3.</strong> Lower and Upper Bound: 4
+                variables, multiplicity 2, [;q = 2;].</caption>
+            <tr>
+                <td></td>
+                <td>       </td>
+                <td>[;i_3=0;]</td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>       </td>
+                <td>[;i_3=1;]</td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>       </td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+                <td></td>
+                <td>       </td>
+                <td></td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+            </tr>
+            <tr>
+                <td>[;i_4=0;]</td>
+                <td>[;i_2=0;]</td>
+                <td>  0-0  </td>
+                <td>  0-0  </td>
+                <td>  8-8  </td>
+                <td>  8-8  </td>
+                <td></td>
+                <td>[;i_4=0;]</td>
+                <td>[;i_2=0;]</td>
+                <td>  0-0  </td>
+                <td>  4-4  </td>
+                <td>  8-12 </td>
+                <td> 12-12 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=1;]</td>
+                <td>  0-0  </td>
+                <td>  4-4  </td>
+                <td>  8-12 </td>
+                <td> 12-12 </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=1;]</td>
+                <td>  4-4  </td>
+                <td>  8-8  </td>
+                <td> 12-14 </td>
+                <td> 14-14 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=2;]</td>
+                <td>  8-8  </td>
+                <td>  8-8  </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=2;]</td>
+                <td>  8-12 </td>
+                <td> 12-12 </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=3;]</td>
+                <td>  8-8  </td>
+                <td> 12-12 </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=3;]</td>
+                <td> 12-12 </td>
+                <td> 14-14 </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>       </td>
+                <td>[;i_3=0;]</td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>       </td>
+                <td>[;i_3=1;]</td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>       </td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+                <td></td>
+                <td>       </td>
+                <td></td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+            </tr>
+            <tr>
+                <td>[;i_4=1;]</td>
+                <td>[;i_2=0;]</td>
+                <td>  0-0  </td>
+                <td>  4-4  </td>
+                <td>  8-12 </td>
+                <td> 12-12 </td>
+                <td></td>
+                <td>[;i_4=1;]</td>
+                <td>[;i_2=0;]</td>
+                <td>  4-4  </td>
+                <td>  8-8  </td>
+                <td> 12-14 </td>
+                <td> 14-14 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=1;]</td>
+                <td>  4-4  </td>
+                <td>  8-8  </td>
+                <td> 12-14 </td>
+                <td> 14-14 </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=1;]</td>
+                <td>  8-8  </td>
+                <td> 11-11 </td>
+                <td> 14-15 </td>
+                <td> 15-15 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=2;]</td>
+                <td>  8-12 </td>
+                <td> 12-12 </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=2;]</td>
+                <td> 12-14 </td>
+                <td> 14-14 </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>[;i_2=3;]</td>
+                <td> 12-12 </td>
+                <td> 14-14 </td>
+                <td>       </td>
+                <td>       </td>
+                <td></td>
+                <td>       </td>
+                <td>[;i_2=3;]</td>
+                <td> 14-14 </td>
+                <td> 15-15 </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+        </table>
+
+        <h3 class="subsection" id="SEC3.1">3.1.&nbsp;Closed formula when [;m=2;]</h3>
+        <p>
+        Proposition 19 in <a href="#geil2009a">[3]</a> upper bounds
+        [;D(i_1,i_2,r,s_1,s_2);] by closed formulas.
+        </p>
+
+        <p>
+        We provide tables comparing the true value of [;D;] and the closed
+        formulas.  For instance for [;m=2;], [;r=2;] and [;s_1=s_2=q=3;], the
+        table looks a follows. Each entry [;i_1,i_2);] contains
+        </p>
+        <div class="equation">
+        [;
+        D(i_1,i_2,2,3,3);] / [;\big(CF(i_1,i_2,2,3,3) - D(i_1,i_2,2,3,3)\big)
+        ;]
+        ,
+        </div>
+        <p>
+        where [;CF;] is the closed formula from Proposition 19.
+        </p>
+
+        <table id="TABvar2mult2q3CF">
+            <caption><strong>Table&nbsp;3.4.</strong> Upper Bound and CF Bound:
+                2 variables, multiplicity 2, [;q = 3;].</caption>
+            <tr>
+                <td></td>
+                <td>[;i_1=0;]</td>
+                <td>[;i_1=1;]</td>
+                <td>[;i_1=2;]</td>
+                <td>[;i_1=3;]</td>
+                <td>[;i_1=4;]</td>
+                <td>[;i_1=5;]</td>
+            </tr>
+            <tr>
+                <td>[;i_2=0;]</td>
+                <td>  0/0  </td>
+                <td>  0/1  </td>
+                <td>  3/0  </td>
+                <td>  3/0  </td>
+                <td>  6/0  </td>
+                <td>  6/0  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=1;]</td>
+                <td>  0/1  </td>
+                <td>  1/1  </td>
+                <td>  4/0  </td>
+                <td>  5/0  </td>
+                <td>  7/0  </td>
+                <td>  7/0  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=2;]</td>
+                <td>  3/0  </td>
+                <td>  3/1  </td>
+                <td>  5/0  </td>
+                <td>  7/0  </td>
+                <td>  8/0  </td>
+                <td>  8/0  </td>
+            </tr>
+            <tr>
+                <td>[;i_2=3;]</td>
+                <td>  3/1  </td>
+                <td>  4/1  </td>
+                <td>  6/0  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=4;]</td>
+                <td>  6/0  </td>
+                <td>  6/0  </td>
+                <td>  7/0  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+            <tr>
+                <td>[;i_2=5;]</td>
+                <td>  6/1  </td>
+                <td>  7/0  </td>
+                <td>  8/0  </td>
+                <td>       </td>
+                <td>       </td>
+                <td>       </td>
+            </tr>
+        </table>
+
+        <h2 class="section" id="SEC4">4.&nbsp;Calculation of the bounds</h2>
+        <p>
+        A program written in <a href="http://www.haskell.org">Haskell</a> was used to
+        generate the numbers.  The source code is available as a
+        <a href="./code.hs">plain .hs file</a> and as a
+        <a href="./code.hs.html">pretty printed file</a>.
+        Further, you can find the file at
+	<a href="http://github.com/cathper/zeros">github</a>. For a commented
+        version, please refer to the thesis of C. Thomsen.
+        The Haskell functions for [;D;], [;H;],
+        (<a href="#EQupperBoundSZ">2.1</a>) and the closed formula are called
+        <code>d</code>, <code>h</code>, <code>sz'</code>, (<code>sz</code>) and
+        <code>cf</code>, respectively, and are programmed such that
+        </p>
+        <ul>
+            <li>[;\texttt{d [}i_1, \ldots, i_m\texttt{]}\ r\ \texttt{[}s_1,
+            \ldots, s_m\texttt{]} = D(i_1, \ldots, i_m, r, s_1, \ldots, s_m);]
+            </li>
+            <li>[;\texttt{h [}i_1, \ldots, i_m\texttt{]}\ r\ \texttt{[}s_1,
+            \ldots, s_m\texttt{]} = H(i_1, \ldots, i_m, r, s_1, \ldots, s_m);]
+            </li>
+            <li>[;\texttt{cf [}i_1, \ldots, i_m\texttt{]}\ r\ \texttt{[}s_1,
+            \ldots, s_m\texttt{]} = CF(i_1, \ldots, i_m, r, s_1, \ldots, s_m);]
+            </li>
+            <li>[;\texttt{sz [}i_1, \ldots, i_m\texttt{]}\ r\ \texttt{[}s_1,
+            \ldots, s_m\texttt{]} =;] [;\min \big\{ (i_1 s_2 \cdots s_m + s_1
+            i_2 s_3 \cdots s_m + \cdots + s_1 \cdots s_{m-1}·i_m)/r, s_1 \cdots
+            s_m \big\};]
+            </li>
+            <li>[;\textstyle\texttt{sz' [}i_1, \ldots, i_m\texttt{]}\ r\ q = \min\big\{
+            \frac{q^{m-1}}{r} \sum_{j=1}^m i_j , q^m\big\};]
+            </li>
+        </ul>
+
+        <h2 class="section" id="SEC5">5.&nbsp;Bounds</h2>
+        <p>
+        In this section you find tables containing the bounds as explained in
+        <a href="#SEC3">Section 3</a>.
+        </p>
+
+        <p align="center" style="font-size: 200%;">
+        Download files as <a href="zeros.zip">zip</a> or <a href="zeros.tar.gz">tar.gz</a>.
+        </p>
+
+        <p>
+        For each combination of [;m;], [;r;] and [;q;], there are two or three
+        files:
+        </p>
+
+        <ol>
+            <li>Lower-Upper: A file containing
+            <div class="equation">
+            "[;
+            H(i_1, \ldots, i_m, r, q, \ldots, q) \textrm{ - }
+            D(i_1,\ldots,i_m,r,q,\ldots,q)
+            ;]".
+            </div>
+            </li>
+            <li>SZ: A file containing 
+            <div class="equation">
+            "[;
+            \textstyle
+            D(i_1,i_2,2,3,3) \textrm{ / } \big( \min\big\{ \frac{q^{m-1}}{r}
+            \sum_{j=1}^m i_j , q^m \big\} - D(i_1,i_2,2,3,3) \big)
+            ;]".
+            </div>
+            </li>
+            <li>CF: If [;m=2;], a file containing
+            <div class="equation">
+            "[;
+            D(i_1,i_2,2,3,3) \textrm{ / } \big(CF(i_1,i_2,2,3,3) -
+            D(i_1,i_2,2,3,3)\big)
+            ;]".
+            </div>
+            </li>
+        </ol>
+
+
+
+        <h2 class="section" id="SEC6">6.&nbsp;Acknowledgements</h2>
+        <p>
+        Thanks to Dr Douglas R. Woodall for creating
+        <a href="http://www.maths.nott.ac.uk/personal/drw/lm.html">the original
+            version of LaTeXMathML.js</a>
+        and thanks to Jeff Knisley for
+        <a href="http://math.etsu.edu/LaTeXMathML">updating LaTeXMathML.js</a>.
+        Thanks to Avital Oliver and helpers for creating
+        <a href="http://thewe.net/tex">TeXtheWorld</a> and thanks to
+        <a href="http://codecogs.com">CodeCogs</a> for rendering math symbols
+        nicely.
+        </p>
+
+        <h2 class="section" id="SEC7">7.&nbsp;References</h2>
+        <div class="reference" id="augot2006a">
+            <strong>[1]</strong>
+            Augot, D., Stepanov, M.: "Interpolation based decoding of
+            Reed-Muller Codes", slides from talk at <i>Special Semester on
+            Gröbner Bases and Related Methods</i>, RICAM, 2006,
+            <a href="http://www.ricam.oeaw.ac.at/specsem/srs/groeb/download/Augot.pdf">http://www.ricam.oeaw.ac.at/specsem/srs/groeb/download/Augot.pdf</a>
+        </div>
+        <div class="reference" id="dvir2009a">
+            <strong>[2]</strong>
+            Dvir, Z., Kopparty, S., Saraf, S., Sudan, M.: "Extensions to the
+            Method of Multiplicities, with applications to Kakeya Sets and
+            Mergers",
+            <a href="http://arxiv.org/abs/0901.2529">arXiv:0901.2529v2</a>,
+            2009, 26 pages.
+        </div>
+        <div class="reference" id="geil2009a">
+            <strong>[3]</strong>
+            Geil, O., Thomsen, C.: "On the number of zeros of multiplicity
+            [;r;]",
+            <a href="http://arxiv.org/abs/0912.1436v2">arXiv:0912.1436v2</a>,
+            2009, 21 pages.
+        </div>
+
+          <p style="text-align: center;">
+          <a href="http://validator.w3.org/check?uri=referer"><img
+              src="http://www.w3.org/Icons/valid-xhtml11" alt="Valid
+              XHTML 1.1" height="31" width="88" /></a>
+          </p>
+    </div>
+    </body>
+</html>
